@@ -4,7 +4,7 @@ using namespace std;
 
 int siz;
 
-struct data{
+struct Data{
     string imie;
     string nazwisko;
     string adres;
@@ -12,20 +12,11 @@ struct data{
 
 struct element{
     int key;
-    data *dane;
+    Data *dane;
     bool to_delete;
     element* next;
 };
 
-element** create_tab(int actual_size){
-    siz=actual_size;
-    element* tab[siz];
-    for(int i=0;i<siz;i++){
-        tab[i]=NULL;
-    }
-    cout<<"Tablica zostala przygotowana"<<endl;
-    return tab;
-}
 
 int hsh(int key){
     return ((13*key+324)%428369)%siz;
@@ -36,7 +27,7 @@ void insert_list(element* &first, element* elem){
     first=elem;
 }
 
-void insert_element(int key, element* tab[], data* dane=NULL){
+void insert_element(int key, element* tab[], Data* dane=NULL){
     element* elem=new element;
     elem->key=key;
     elem->dane=dane;
@@ -49,8 +40,8 @@ void delete_element(int key, element* tab[]){
     element* tmp=tab[hsh(key)];
     while(tmp!=NULL && (tmp->key!=key || tmp->to_delete))tmp=tmp->next;
     if(tmp!=NULL){
-            cout<<"Element oznaczono do usuniecia"<<endl;
-            tmp->to_delete=true;
+        cout<<"Element oznaczono do usuniecia"<<endl;
+        tmp->to_delete=true;
     }
     else cout<<"Nie ma takiego elementu"<<endl;
 }
@@ -59,8 +50,8 @@ element* find_element(int key, element* tab[]){
     element* tmp=tab[hsh(key)];
     while(tmp!=NULL && (tmp->key!=key || tmp->to_delete))tmp=tmp->next;
     if(tmp!=NULL){
-            cout<<"Znaleziono odpowiedni element"<<endl;
-            return tmp;
+        cout<<"Znaleziono odpowiedni element"<<endl;
+        return tmp;
     }
     cout<<"Nie ma takiego elementu"<<endl;
     return NULL;
@@ -110,7 +101,7 @@ void cout_tab(element* tab[]){
 int main(){
     cout<<"Podaj rozmiar tablicy: ";
     cin>>siz;
-    element* tab[siz];
+    element** tab=new element*[siz];
     for(int i=0;i<siz;i++){
         tab[i]=NULL;
     }
